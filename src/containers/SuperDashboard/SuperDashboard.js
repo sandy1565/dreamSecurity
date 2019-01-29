@@ -54,16 +54,19 @@ export default class Dashboard extends Component {
           </form>
         </div>
       </nav>
-      <div style={{ marginTop: '48px' }}>
+      <div style={{ margin: '48px auto' }}>
         <Sidebar.Pushable as={Segment} attached="bottom">
           <Sidebar width='thin' as={Menu} animation="uncover" visible={this.state.menuVisible} icon="labeled" vertical inverted>
-            <Menu.Item><Icon name="user" /><Link to="/superDashboard/registration">Society Admin Register</Link></Menu.Item>
+            <Menu.Item><Icon name="user" /><Link to="/superDashboard/registration">Super Admin Register</Link></Menu.Item>
             <Menu.Item><Icon name="user" />Admin Register</Menu.Item>
             <Menu.Item><Icon name="user" />Society Member Owner Register</Menu.Item>
             <Menu.Item><Icon name="user" />Society Member Tenant Register</Menu.Item>
             <Menu.Item><Icon name="user" /><Link to="/vendorDashboard">Vendor</Link></Menu.Item>
             <Menu.Item><Icon name="user" /><Link to="/superDashboard/add_parking/new">Parking Master</Link></Menu.Item>
             <Menu.Item><Icon name="user" /><Link to="/superDashboard/towermaster">Tower Master</Link></Menu.Item>
+            <Menu.Item><Icon name="user" /><Link to="/superDashboard/event">Event Master</Link></Menu.Item>
+            <Menu.Item><Icon name="user" /><Link to="/superDashboard/flatmaster">Flat Master</Link></Menu.Item>
+            <Menu.Item><Icon name="user" /><Link to="/superDashboard/sizemaster">Size Master</Link></Menu.Item>
           </Sidebar>
           <Sidebar.Pusher dimmed={this.state.menuVisible}>
             <Segment basic style={{ backgroundImage: `url(${Logo})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', height: '600px' }}>

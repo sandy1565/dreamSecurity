@@ -176,6 +176,8 @@ class Registration extends Component {
                     <Menu.Item><Icon name="user" /><Link to="/superDashboard/add_parking/new">Parking Master</Link></Menu.Item>
                     <Menu.Item><Icon name="user" /><Link to="/superDashboard/towermaster">Tower Master</Link></Menu.Item>
                     <Menu.Item><Icon name="user" /><Link to="/superDashboard/event">Event Master</Link></Menu.Item>
+                    <Menu.Item><Icon name="user" /><Link to="/superDashboard/flatmaster">Flat Master</Link></Menu.Item>
+                    <Menu.Item><Icon name="user" /><Link to="/superDashboard/sizemaster">Size Master</Link></Menu.Item>
                     </Sidebar>
                     <Sidebar.Pusher dimmed={this.state.menuVisible}>
                         <Segment basic style={{ backgroundImage: `url(${Logo})`,padding:'55px 0', backgroundSize: 'cover', backgroundRepeat: 'no-repeat', height: 'auto' }}>
