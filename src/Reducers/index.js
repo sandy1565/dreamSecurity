@@ -11,6 +11,7 @@ import vendorMasterReducer from './VendorMangement/vendorMasterReducer';
 import SizeDetails from './size_reducer';
 import societyReducer from './Society_reducer';
 import parkingDetail from './parking_reducer';
+import personDetails from './person_reducer';
 
 const rootReducer = combineReducers({
     loginReducer,
@@ -26,6 +27,6 @@ const rootReducer = combineReducers({
     displayServiceMasterReducer,
     vendorMasterReducer,
     societyReducer,
-    
+    personDetails
 })
 export default rootReducer;

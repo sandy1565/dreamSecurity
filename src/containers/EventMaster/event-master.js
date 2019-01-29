@@ -26,6 +26,14 @@ class EventMaster extends Component {
     // userId:''
 
   }
+
+  OnKeyPresshandler(event) {
+    const pattern = /[a-zA-Z]/;
+    let inputChar = String.fromCharCode(event.charCode);
+    if (!pattern.test(inputChar)) {
+        event.preventDefault();
+    }
+}
   componentDidMount() {
     this.props.GetEventOrganiser()
     console.log("hieee", this.props.GetEventOrganiser)
@@ -130,9 +138,10 @@ class EventMaster extends Component {
                         type="text"
                         className="form-control"
                         placeholder="eventType"
-
+                        onKeyPress={this.OnKeyPresshandler}
                         name="eventType"
                         onChange={this.onChange}
+                        required
                       />
 
                     </div>
@@ -143,9 +152,10 @@ class EventMaster extends Component {
                         type="text"
                         className="form-control"
                         placeholder="eventName"
-
+                        onKeyPress={this.OnKeyPresshandler}
                         name="eventName"
                         onChange={this.onChange}
+                        required
                       />
                     </div>
 
@@ -157,6 +167,7 @@ class EventMaster extends Component {
                         name="startDate"
                         placeholder=" event start date"
                         onChange={this.onChange}
+                        required
                       />
                     </div>
 
@@ -168,6 +179,7 @@ class EventMaster extends Component {
                         name="endDate"
                         placeholder="event end date"
                         onChange={this.onChange}
+                        required
                       />
                     </div>
                     <div className="form-group">
@@ -178,6 +190,7 @@ class EventMaster extends Component {
                         name="eventOrganiser"
                         value={this.state.userId}
                         onChange={this.onChange}
+                        required
                       >
                         <option > Please Select</option>
                         {this.getEvent(this.props.EventDetails)}
