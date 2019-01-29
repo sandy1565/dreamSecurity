@@ -36,7 +36,7 @@ export default class Dashboard extends Component {
         <div className="navbar-collapse collapse" id="navbarCollapse" style={{ marginLeft: '20%' }}>
           <ul className="navbar-nav mr-auto">
             <li className="nav-item active">
-              <Link className="nav-link" to="/vendorDashboard">Home<span className="sr-only">(current)</span></Link>
+              <Link className="nav-link" to="/superDashboard">Home<span className="sr-only">(current)</span></Link>
             </li>
             <li className="nav-item">
               <Link className="nav-link" to="#">Gallery</Link>
