@@ -169,9 +169,7 @@ class userDetails extends Component {
                             <Menu.Item><Icon name="user" /><Link to="/superDashboard/sizemaster">Size Master</Link></Menu.Item>
                         </Sidebar>
                         <Sidebar.Pusher dimmed={this.state.menuVisible}>
-                            <Segment basic >
-                                {/* <Header as="h3">Application Content</Header> */}
-                                {/* <Image src='//unsplash.it/800/480' /> */}
+                            <Segment basic style={{overFlow:'auto'}}>
                                 <div className="container">
 
                                     <h1>Users List</h1>
