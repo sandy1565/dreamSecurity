@@ -1,0 +1,14 @@
+{
+  "createParking": [
+    {
+      "basement": "B2",
+      "parking": "100",
+      "id": 1
+    },
+    {
+      "basement": "B2",
+      "parking": "50",
+      "id": 2
+    }
+  ]
+}

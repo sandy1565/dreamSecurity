@@ -1,0 +1,14 @@
+{
+  "parking": [
+    {
+      "id": 1,
+      "basement": "B1",
+      "parking": 50
+    },
+    {
+      "id": 2,
+      "basement": "B2",
+      "parking": 20
+    }
+  ]
+}
