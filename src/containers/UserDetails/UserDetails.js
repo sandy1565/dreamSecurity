@@ -169,7 +169,7 @@ class userDetails extends Component {
                             <Menu.Item><Icon name="user" /><Link to="/superDashboard/sizemaster">Size Master</Link></Menu.Item>
                         </Sidebar>
                         <Sidebar.Pusher dimmed={this.state.menuVisible}>
-                            <Segment basic style={{overFlow:'auto'}}>
+                            <Segment basic style={{overFlow:'scroll'}}>
                                 <div className="container">
 
                                     <h1>Users List</h1>

@@ -7,7 +7,7 @@ import{URN,ADD_USER,FETCH_BASEMENT,FETCH_PARKING,CREATE_PARKING,GET_ROLES,GET_US
 
 export function addUser(values) {
     console.log("localstorage get item---?",localStorage.getItem('token'))
-    const request = axios.post(`${URN}/auth/signupCopy`, values , { method: 'POST',
+    const request = axios.post(`${URN}/auth/signup`, values , { method: 'POST',
                     headers: {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json',
@@ -34,7 +34,7 @@ export function getUsers(){
 }
 
 export function getRoles(){
-    const request = axios.get(`${URN}/user/role`, {headers:authHeader()})
+    const request = axios.get(`${URN}/user/userRole`, {headers:authHeader()})
     .then((response =>response.data))
 
     return {
