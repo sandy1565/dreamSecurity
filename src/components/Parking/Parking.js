@@ -15,7 +15,8 @@ class Parking extends Component {
     state = {
         parkingId: '',
         numberOfSlots: '',
-        menuVisible: false
+        menuVisible: false,
+        errors: {}
     }
 
     getParking({ parking }) {
@@ -25,7 +26,7 @@ class Parking extends Component {
             return parking.map((item) => {
                 console.log(item)
                 return (
-                    <option value={item.parkingId} key={item.parkingId}>
+                    <option name="parkingId" value={item.parkingId} key={item.parkingId}>
                         {item.parkingName}
                     </option>
                 )
@@ -34,15 +35,49 @@ class Parking extends Component {
     }
 
     onChange = (e) => {
-        this.setState({ [e.target.name]: e.target.value })
+        if(!!this.state.errors[e.target.name]){
+            let errors = Object.assign({}, this.state.errors);
+            delete errors[e.target.name];
+            this.setState({ [e.target.name]: e.target.value, errors })
+            console.log(this.state)
+        }
+        else{
+            this.setState({ [e.target.name]: e.target.value })
+        }
+        
         console.log(this.state)
     }
 
+    numberOfSlots = (event) => {
+        const pattern = /^[0-9]$/;
+        let inputChar = String.fromCharCode(event.charCode);
+        if (!pattern.test(inputChar)) {
+            event.preventDefault();
+        }
+    }
+
     submit = (e) => {
-        e.preventDefault()
-        console.log(this.state);
-        this.props.createParking({ ...this.state })
-            .then(() => this.props.history.push('/superDashboard/parking_master'))
+        e.preventDefault();
+        let errors = {};
+        if(!this.state.parkingId){
+            errors.parkingId = `Parking details can't be empty. Please select any.`
+        }
+        else {
+            errors.parkingId=``;
+        }
+        if(this.state.numberOfSlots === ''){
+            errors.numberOfSlots = `Please select number of slots.`
+        }
+        else errors.numberOfSlots = ``;
+        this.setState({errors});
+        const isValid = Object.keys(errors).length === 0;
+
+        if(isValid){
+            console.log(this.state);
+            this.props.createParking({ ...this.state })
+            .then(() => this.props.history.push('/superDashboard/parking_master'));
+        }
+        
     }
 
     render() {
@@ -99,20 +134,21 @@ class Parking extends Component {
                                         <FormGroup>
                                             <Label>Parking Name</Label>
                                             <Input type="select" name="parkingId" onChange={this.onChange}>
-                                                <option value=''>--Select--</option>
+                                                <option  value=''>--Select--</option>
                                                 {this.getParking(this.props.parkingDetail)}
                                             </Input>
-                                            {/* <span>{this.state.errors.roles}</span> */}
+                                            <span>{this.state.errors.parkingId}</span>
                                         </FormGroup>
                                         <FormGroup>
                                             <Label>Parking</Label>
                                             <Input name="numberOfSlots"
-                                                type="number"
+                                                type="text"
                                                 value={this.state.numberOfSlots}
                                                 onChange={this.onChange}
-                                                maxLength='10'
+                                                onKeyPress={this.numberOfSlots}
+                                                maxLength='2'
                                             />
-                                            {/* <span>{this.state.errors.firstName}</span> */}
+                                            <span>{this.state.errors.numberOfSlots}</span>
                                         </FormGroup>
                                         <Button color="success" className="mr-2">Add</Button>
                                         <Link to="/superDashboard/parking_master" color="primary">Parking Details</Link>
