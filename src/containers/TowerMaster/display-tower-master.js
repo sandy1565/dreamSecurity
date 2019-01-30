@@ -30,6 +30,17 @@ class DisplayTowerMaster extends Component {
     this.props.viewTower()
 
   }
+
+  OnKeyPresshandle(event) {
+    const pattern=/^[0-9]$/;
+    let inputChar = String.fromCharCode(event.charCode);
+    if (!pattern.test(inputChar)) {
+      event.preventDefault();
+      
+    }
+  }
+
+  
   refreshdata() {
     this.props.viewTower()
 
@@ -163,9 +174,12 @@ class DisplayTowerMaster extends Component {
 
                         editTowerData.towerName = e.target.value;
 
-                        this.setState({ editTowerData });
+                        this.setState({ editTowerData })
+                        
+                      }}
+                      onKeyPress={this.OnKeyPresshandler}
 
-                      }} />
+                       required />
                     </FormGroup>
 
 

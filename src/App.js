@@ -26,12 +26,15 @@ import DisplayEventMaster from './containers/EventMaster/display-event-master';
 import DisplaySizeMaster from './containers/SizeMaster/display-size-master';
 import FlatMaster from './containers/Flat_master/flatMaster';
 import FlatMasterDetails from './containers/Flat_master/flatMasterDetails';
+
+import PersonDetails from './containers/PersonDetails/person-details';
 // import AssetManagement from './containers/Asset/Asset_Management';
 // import AssetManagementDetails from './containers/Asset/Asset-Management-Details';
 import serviceMaster from './containers/VendorMangement/ServiceMaster/serviceMaster';
 import displayServices from './containers/VendorMangement/ServiceMaster/displayServiceMaster';
 import vendorMaster from './containers/VendorMangement/VendorMaster/vendorMaster';
 import displayVendorMaster from './containers/VendorMangement/VendorMaster/displayVendorMaster';
+import displayPersonDetails from './containers/PersonDetails/display-person-details';
 // import flatDetailMaster from './containers/FlatDetailMaster/flatDetailMaster';
 // import flatDetails from './containers/FlatDetailMaster/flatDetails';
 
@@ -67,10 +70,11 @@ class App extends Component {
             {/* <Route path ='/superDashboard/assetmanagement/assetmanagementdetails'component ={AssetManagementDetails}/> */}
             <Route path='/superDashboard/add_parking/new' component ={Parking} />
             <Route path='/superDashboard/serviceMaster' component={serviceMaster} />
-
+            <Route path ='/superDashboard/personDetails' component ={PersonDetails}/>
             <Route path ='/superDashboard/vendorMaster'component ={vendorMaster}/>
             <Route path= '/superDashboard/displayVendorMaster' component={displayVendorMaster}/>
             <Route path ='/superDashboard/displayServices'component ={displayServices}/>
+            <Route path ='/superDashBoard/displayPerson' component={displayPersonDetails}/>
             {/* <Route path ='/superdashboard/flatDetailMaster' component ={flatDetailMaster}/>
             <Route path ='/superdashboard/flatDetails' component ={flatDetails}/> */}
           </Switch>

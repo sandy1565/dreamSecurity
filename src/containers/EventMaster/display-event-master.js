@@ -68,10 +68,13 @@ class DisplayEventMaster extends Component {
                 })
         }
 
-
-
-
-
+        OnKeyPresshandler(event) {
+                const pattern = /[a-zA-Z]/;
+                let inputChar = String.fromCharCode(event.charCode);
+                if (!pattern.test(inputChar)) {
+                    event.preventDefault();
+                }
+            }
         deleteEvent(eventId) {
                 let { isActive } = this.state.editEventData;
                 axios.delete(`${URN}/event/delete/` + eventId, { isActive }, { headers: authHeader() }).then((response) => {
@@ -198,6 +201,9 @@ class DisplayEventMaster extends Component {
 
                                                                                                                 this.setState({ editEventData });
                                                                                                         }}
+
+                                                                                                        onKeyPress ={this.OnKeyPresshandler}
+                                                                                                        required
                                                                                                 />
                                                                                         </FormGroup>
 
@@ -207,7 +213,9 @@ class DisplayEventMaster extends Component {
                                                                                                         let { editEventData } = this.state;
                                                                                                         editEventData.eventName = e.target.value;
                                                                                                         this.setState({ editEventData });
-                                                                                                }} />
+                                                                                                }}
+                                                                                                onKeyPress={this.OnKeyPresshandler}
+                                                                                                required />
                                                                                         </FormGroup>
                                                                                         <FormGroup>
                                                                                                 <Label >Event Organiser</Label>
@@ -218,7 +226,7 @@ class DisplayEventMaster extends Component {
 
                                                                                                         this.setState({ editEventData })
 
-                                                                                                }} >
+                                                                                                }}  required >
                                                                                                         <option value={this.state.editEventData.userName}>{this.state.editEventData.userName}</option>
 
                                                                                                         <option disabled> Select an Event Organiser</option>

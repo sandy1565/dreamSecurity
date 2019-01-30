@@ -26,6 +26,7 @@ class SizeMaster extends Component {
     }
 
 
+<<<<<<< Updated upstream
     submit(e) {
         e.preventDefault();
         console.log(this.state);
@@ -37,10 +38,46 @@ class SizeMaster extends Component {
             }
         }),
             this.props.history.push('/superDashboard/display-size');
+=======
+ class SizeMaster extends Component{
+constructor(props){
+super(props);
+this.state ={
+   
+    sizeType:""
+}
+
+this.onChange = this.onChange.bind(this);
+this.submit = this.submit.bind(this);
+}
+
+onChange(e){
+    this.setState({[e.target.name]: e.target.value});
+}
+
+OnKeyPresshandler(event) {
+    const pattern = /[a-zA-Z]/;
+    let inputChar = String.fromCharCode(event.charCode);
+    if (!pattern.test(inputChar)) {
+        event.preventDefault();
+    }
+}
+submit(e){
+    e.preventDefault();
+    console.log(this.state);
+     this.props.AddSize(this.state)
+     return this.setState({ state:{
+        
+        sizeType:""
+     }
+     }),
+     this.props.history.push('/superDashboard/display-size');
+>>>>>>> Stashed changes
 
     }
 
 
+<<<<<<< Updated upstream
     render() {
         return (
             <div>
@@ -109,6 +146,26 @@ class SizeMaster extends Component {
             </div>
 
         )
+=======
+render(){
+return(
+<div>
+    <form onSubmit ={this.submit}>
+ 
+        <div className="form-group">
+        <label> Size Type</label>
+                       
+        <input type ="text"  className ="form-control"    onKeyPress={this.OnKeyPresshandler}  placeholder = "sizeType" value ={this.state.size_type} name ="sizeType" onChange ={this.onChange}  required  />
+      </div>
+      <div  className ="form-group">
+       <button type= "submit"  className= " form-control btn btn-primary ">Submit</button>
+       </div>
+    </form>
+    
+</div>
+
+)   
+>>>>>>> Stashed changes
 
     }
 

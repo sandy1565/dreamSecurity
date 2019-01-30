@@ -114,6 +114,7 @@ class DisplaySizeMaster extends Component {
     return (
 
       <div>
+<<<<<<< Updated upstream
         <nav className="navbar navbar-expand-md navbar-dark fixed-top bg-dark" id="headernav" >
           <Menu.Item onClick={() => this.setState({ menuVisible: !this.state.menuVisible })} >
             <Icon name="sidebar" style={{ color: 'white', cursor: 'pointer' }} />
@@ -206,6 +207,42 @@ class DisplaySizeMaster extends Component {
             </Sidebar.Pusher>
           </Sidebar.Pushable>
         </div>
+=======
+        <h3 align="center"> Size List</h3>
+
+        <Modal isOpen={this.state.editSizeModal} toggle={this.toggleEditSizeModal.bind(this)}>
+          <ModalHeader toggle={this.toggleEditSizeModal.bind(this)}>Edit  Size Details</ModalHeader>
+          <ModalBody>
+
+
+            <FormGroup>
+              <Label for="lastName"> Size Type</Label>
+              <Input id="sizeType" value={this.state.editSizeData.sizeType} onChange={(e) => {
+                let { editSizeData } = this.state;
+
+                editSizeData.sizeType = e.target.value;
+
+                this.setState({ editSizeData });
+              }}
+              onKeyPress={this.OnKeyPresshandler}
+              required />
+            </FormGroup>
+
+
+          </ModalBody>
+          <ModalFooter>
+            <Button color="primary" onClick={this.updateSize.bind(this)}>Update Size Details</Button>{' '}
+            <Button color="secondary" onClick={this.toggleEditSizeModal.bind(this)}>Cancel</Button>
+          </ModalFooter>
+        </Modal>
+
+        <table className="table table-striped" style={{ marginTop: 20 }}>
+          <thead>
+            <tr>
+
+              <th>Size  Details</th>
+
+>>>>>>> Stashed changes
 
       </div>
     );

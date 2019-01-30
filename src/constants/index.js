@@ -34,5 +34,6 @@ export const ADD_VENDOR_MASTER='add_vendor_master';
 export const GET_VENDOR_MASTER='get_vendor_master';
 export const GET_TOWER_NAME='get_tower_name';
 export const GET_FLAT_TYPE ='get_flat_type';
-
-
+export const GET_FLAT ='get_flat'
+export const ADD_PERSON ='add_person';
+export const GET_PERSON ='get_person';

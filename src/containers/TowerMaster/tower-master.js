@@ -103,7 +103,7 @@ class TowerMaster extends Component {
                                     <Form onSubmit={this.onSubmit}>
                                         <FormGroup>
                                             <Label>Tower Name</Label>
-                                            <Input type="text" className="form-control" placeholder="tower Name" name="towerName" value={this.state.name} onKeyPress={this.OnKeyPresshandler} onChange={this.onChange} />
+                                            <Input type="text" className="form-control" placeholder="tower Name" name="towerName" value={this.state.name} onKeyPress={this.OnKeyPresshandler} onChange={this.onChange} required />
                                         </FormGroup>
                                         <FormGroup>
                                             <Button color="success" className="mr-2">Submit</Button>
