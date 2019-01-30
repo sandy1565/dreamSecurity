@@ -19,7 +19,7 @@ class FlatMaster extends Component{
                 sizeId:'',
                  
                 coverArea:'',
-                 validationError:'',
+                
                  errors:{},
                  isSubmit: false
            }
@@ -44,14 +44,14 @@ class FlatMaster extends Component{
          if(!this.state.sizeId){
              errors.sizeId="sizeType cannot be empty";
          }
-         if(this.state.coverName==='')errors.coverArea="cant be empty";
+         if(this.state.coverName ==='') errors.coverArea="cant be empty";
          this.setState({errors});
 
-         const isValid = Object.keys(errors).length === 0
+         const isValid = Object.keys(errors).length === 0;
 
-         if( isValid){
-            this.setState({isSubmit: true})
-       this.props.AddDetails({...this.state})
+         if(isValid){
+            this.setState({ isSubmit: true })
+       this.props.AddDetails({ ...this.state })
         this.setState({
             societyId:"",
             flatType:'',
@@ -67,16 +67,16 @@ class FlatMaster extends Component{
        
 
     //    this.props.AddDetails(societyId,flatType,flatSuperArea,sizeId,coverArea)
-       this.props.history.push('/superDashboard/flatmaster/flatmasterdetails');
+    //    this.props.history.push('/superDashboard/flatmaster/flatmasterdetails');
     //    this.props.getDetails();
    
                
 }
     onChange = (e) => {
         if(!!this.state.errors[e.target.value]){
-            // let errors=Object.assign({},this.state.errors);
-            // delete errors[e.target.name];
-            // this.setState({[e.target.name]:e.target.value.trim(''),errors});
+            let errors=Object.assign({},this.state.errors);
+            delete errors[e.target.name];
+            this.setState({[e.target.name]:e.target.value.trim(''),errors});
         }else{
             this.setState({[e.target.name]:e.target.value.trim('')});
         }
@@ -129,74 +129,74 @@ class FlatMaster extends Component{
     render(){
         
          
-               const form = <Form onSubmit={this.submit}>
-                <FormGroup>
-                <Label>SocietyName</Label>
-                    <Input  
-                    type="select"
-                    name="societyId"
-                    onChange={this.onChange}>  
-                    <option >--SELECT--</option>        
-                {this.societyName(this.props.flat)}    
-                    </Input>
-                    <span>{this.state.errors.societyId}</span>
-                    
-                </FormGroup>
-
-
-                <FormGroup>
-                    <Label>Flat Type</Label>
-                    <Input 
-                    type="text"
-                    name="flatType"
-                    value={this.state.flatType} 
-                    onChange={this.onChange}/>
-                    <span>{this.state.errors.flatType}</span>
-                </FormGroup>
-
-                <FormGroup>
-                <Label>Flat SuperArea</Label>
-                <Input
-                type="number"
-                name="flatSuperArea"
-                value={this.state.flatSuperArea} 
-                onChange={this.onChange}/>
-                 <span>{this.state.errors.flatSuperArea}</span>
-                 </FormGroup>
-
-                 <FormGroup>
-                <Label>Size Type</Label>
-                <Input
-                type="select"
-                name="sizeId"
-                onChange={this.onChange}>
-                <option>--SELECT--</option>
-            {this.sizeType(this.props.flat)} 
-                </Input> 
-                <span>{this.state.errors.sizeId}</span>
-                </FormGroup>
-
-                <FormGroup>
-                <Label>CoverArea</Label>
-                <Input
-                type="number"
-                name="coverArea"
-                value={this.state.coverArea} 
-                onChange={this.onChange}/>
-                </FormGroup>
+        const form = <Form onSubmit={this.submit}>
+        <FormGroup>
+        <Label>SocietyName</Label>
+            <Input  
+            type="select"
+            name="societyId"
+            onChange={this.onChange}>  
+            <option >--SELECT--</option>        
+        {this.societyName(this.props.flat)}    
+            </Input>
+            <span>{this.state.errors.societyId}</span>
             
-                <FormGroup>
-                    <Button color="primary" type="submit" col="sm-2">Submit</Button>
-                    <Button color="success" onClick={this.push}>FlatDetails</Button>
-                </FormGroup> 
-                </Form>      
-           
-            
-            return (
-                <div className="flatMaster">
-                    {this.state.isSubmit ? <Redirect to="/superDashboard/flatmaster/flatmasterdetails" />: form}
-                </div>
-            )
+        </FormGroup>
+
+
+        <FormGroup>
+            <Label>Flat Type</Label>
+            <Input 
+            type="text"
+            name="flatType"
+            value={this.state.flatType} 
+            onChange={this.onChange}/>
+            <span>{this.state.errors.flatType}</span>
+        </FormGroup>
+
+        <FormGroup>
+        <Label>Flat SuperArea</Label>
+        <Input
+        type="number"
+        name="flatSuperArea"
+        value={this.state.flatSuperArea} 
+        onChange={this.onChange}/>
+         <span>{this.state.errors.flatSuperArea}</span>
+         </FormGroup>
+
+         <FormGroup>
+        <Label>Size Type</Label>
+        <Input
+        type="select"
+        name="sizeId"
+        onChange={this.onChange}>
+        <option>--SELECT--</option>
+    {this.sizeType(this.props.flat)} 
+        </Input> 
+        <span>{this.state.errors.sizeId}</span>
+        </FormGroup>
+
+        <FormGroup>
+        <Label>CoverArea</Label>
+        <Input
+        type="number"
+        name="coverArea"
+        value={this.state.coverArea} 
+        onChange={this.onChange}/>
+        </FormGroup>
+    
+        <FormGroup>
+            <Button color="primary" type="submit" col="sm-2">Submit</Button>
+            <Button color="success" onClick={this.push}>FlatDetails</Button>
+        </FormGroup> 
+        </Form>      
+   
+    
+    return (
+        <div className="flatMaster">
+            {this.state.isSubmit ? <Redirect to="/superDashboard/flatmaster/flatmasterdetails" />: form}
+        </div>
+    )
            
     }
 }

@@ -26,6 +26,7 @@ import DisplayEventMaster from './containers/EventMaster/display-event-master';
 import DisplaySizeMaster from './containers/SizeMaster/display-size-master';
 import FlatMaster from './containers/Flat_master/flatMaster';
 import FlatMasterDetails from './containers/Flat_master/flatMasterDetails';
+import QR from './containers/QR/QR Code';
 // import AssetManagement from './containers/Asset/Asset_Management';
 // import AssetManagementDetails from './containers/Asset/Asset-Management-Details';
 import serviceMaster from './containers/VendorMangement/ServiceMaster/serviceMaster';
@@ -61,6 +62,7 @@ class App extends Component {
             <Route path ='/superDashboard/event' component ={EventMaster}/>
             <Route path='/superDashboard/flatmaster' exact component= {FlatMaster}/>
             <Route path ='/superDashboard/flatmaster/flatmasterdetails' component ={FlatMasterDetails}/>
+            <Route path ='/superDashboard/qr' component ={QR}/>
             <Route path ='/superDashboard/societyManagement' component={SocietyManagement}/>
             <Route path ='/superDashboard/display-event'component ={DisplayEventMaster}/>
             {/* <Route path ='/superDashboard/assetmanagement'component ={AssetManagement}/> */}
