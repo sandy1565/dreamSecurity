@@ -2,12 +2,14 @@ const db = require('../config/db.config.js');
 const httpStatus = require('http-status')
 
 const AssetsType = db.assetsType;
+const Assets = db.assets;
 
 exports.create = async (req, res, next) => {
     try {
         console.log("userId==>",req.userId)
         let body = req.body;
         body.userId = req.userId;
+        console.log("body==>",req.body)
         const assetsType = await AssetsType.create(body);
         return res.status(httpStatus.CREATED).json({
             message: "AssetsType successfully created",
@@ -21,7 +23,9 @@ exports.create = async (req, res, next) => {
 
 exports.get = async(req,res,next) => {
     try{
-        const assetsType = await AssetsType.findAll({where:{isActive:true}});
+        const assetsType = await AssetsType.findAll({where:{isActive:true},
+        include:[{model:Assets,attributes:['assetId','assetName']}]
+        });
         if(assetsType){
             return res.status(httpStatus.CREATED).json({
                 message: "AssetsType Content Page",

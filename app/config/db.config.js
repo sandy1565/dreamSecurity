@@ -54,6 +54,7 @@ db.state.belongsTo(db.country,{foreignKey: 'countryId'});
 db.state.belongsTo(db.user,{foreignKey: 'userId'});
 db.city.belongsTo(db.user,{foreignKey: 'userId'});
 db.city.belongsTo(db.state,{foreignKey: 'stateId'});
+db.city.belongsTo(db.country,{foreignKey:'countryId'})
 db.location.belongsTo(db.country,{foreignKey: 'countryId'});
 db.location.belongsTo(db.state,{foreignKey: 'stateId'});
 db.location.belongsTo(db.city,{foreignKey: 'cityId'});

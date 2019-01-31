@@ -23,7 +23,7 @@ exports.create = async (req, res, next) => {
 
 exports.get = async(req,res,next) => {
     try{
-        console.log("getting assets")
+
         const assets = await Assets.findAll({where:{isActive:true}});
         if(assets){
             return res.status(httpStatus.CREATED).json({

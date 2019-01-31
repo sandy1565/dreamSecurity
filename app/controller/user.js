@@ -9,6 +9,7 @@ var generator = require('generate-password');
 const User = db.user;
 const Role = db.role;
 const Test = db.test;
+const Tower = db.tower;
 
 const Op = db.Sequelize.Op;
 
@@ -41,7 +42,7 @@ exports.signup = (req, res) => {
 			length: 10,
 			numbers: true
 		});
-      body.password = password;
+	  body.password = password;
 	}
 	User.create({
 		firstName: req.body.firstName,
@@ -133,8 +134,9 @@ exports.signin = (req, res) => {
 				message: "Invalid Username!"	
 			});
 		}
-
+        
 		var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
+		console.log("isvalid===>",passwordIsValid)
 		if (!passwordIsValid) {
 			return res.status(httpStatus.OK).send({
 				status: 401,
@@ -174,7 +176,9 @@ exports.get = (req, res) => {
 			include: [{
 				model: Role,
 				attributes: ['id','roleName'],
-			}]
+			},
+			{model:Tower}
+		]
 		})
 		.then(user => {
 	//   let decipher = crypto.createCipher(config.algorithm,user.QRCode);
@@ -183,6 +187,7 @@ exports.get = (req, res) => {
 			res.status(httpStatus.OK).json(user);
 		});
 	}catch(error){
+		console.log("error--->",error)
 		res.status(httpStatus.INTERNAL_SERVER_ERROR).json({error:error})
 	}
 }

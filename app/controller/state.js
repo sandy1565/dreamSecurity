@@ -42,14 +42,10 @@ exports.getById = (req,res) => {
 }
 
 exports.getCountry = (req,res) => {
-
     State.findAll({
        where: {countryId: req.params.id},
    }).then(state => {
-    res.status(200).json({
-        "description": "State Content Page",
-        "state": state
-    });
+    res.status(200).json(state);
 }).catch(err => {
     res.status(500).json({
         "description": "Can not state Page",
