@@ -1,46 +1,46 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { fetchParking} from '../../actionCreators/parkingAction';
-import { Table, Button } from 'reactstrap';
-import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { AddSize } from '../../actionCreators/sizeMasterAction';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Logo from '../../assets/2.jpg';
 import { Segment, Menu, Icon, Sidebar } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
+import './sizeMaster.css';
+import { Form, FormGroup, Input, Button, Label } from 'reactstrap';
 
-class ParkingMaster extends Component {
-    state = {
-        menuVisible: false
-    }
-    componentDidMount() {
-        this.props.fetchParking()
-    }
-
-    delete_Parking(id) {
-        this.props.deleteParking(id)
-            .then(() => this.props.fetchParking())
-    }
-
-    renderParking({ parking }) {
-        console.log(parking);
-        if (parking) {
-            return parking.slot.map((item) => {
-                console.log(item)
-                return (
-                    <tr key={item.parking_master.parkingName}>
-                        <td>
-                            {item.parking_master.parkingName}
-                        </td>
-                        <td>
-                            {item.count}
-                        </td>
-                        <td>
-                            <Button color='success' className="mr-2">Edit</Button>
-                            <Button color='danger' onClick={this.delete_Parking.bind(this, item.id)}>Delete</Button>
-                        </td>
-                    </tr>
-                );
-            })
+class SizeMaster extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            sizeType: "",
+            menuVisible: false
         }
+
+        this.onChange = this.onChange.bind(this);
+        this.submit = this.submit.bind(this);
     }
+
+    onChange(e) {
+        this.setState({ [e.target.name]: e.target.value });
+    }
+
+
+    submit(e) {
+        e.preventDefault();
+        console.log(this.state);
+        this.props.AddSize(this.state)
+        return this.setState({
+            state: {
+
+                sizeType: ""
+            }
+        }),
+            this.props.history.push('/superDashboard/display-size');
+
+    }
+
+
     render() {
         return (
             <div>
@@ -86,49 +86,46 @@ class ParkingMaster extends Component {
                             <Menu.Item><Icon name="user" /><Link to="/superDashboard/sizemaster">Size Master</Link></Menu.Item>
                         </Sidebar>
                         <Sidebar.Pusher dimmed={this.state.menuVisible}>
-                            <Segment basic >
-                                {/* <Header as="h3">Application Content</Header> */}
-                                {/* <Image src='//unsplash.it/800/480' /> */}
-                                <h1 style={{ color: 'black' }}>Add Parking</h1>
-                                <div>
-                                    <div>
-                                        <Link to='/superDashboard/add_parking/new'>Add Parking</Link>
-                                    </div>
-                                    <h3>Parking details</h3>
-                                    <div className="container">
-                                        <Table>
-                                            <thead>
-                                                <tr>
-                                                    <th>Basement</th>
-                                                    <th>No. of Parking</th>
-                                                    <th>Actions</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {this.renderParking(this.props.parkingDetail)}
-                                            </tbody>
-                                        </Table>
-                                    </div>
+                            <Segment basic style={{ backgroundImage: `url(${Logo})`,padding:'55px 0px', backgroundSize: 'cover', backgroundRepeat: 'no-repeat', height: '600px' }}>
+                                <div className="form">
+                                    <Form onSubmit={this.submit}>
+                                        <FormGroup>
+                                            <Label> Size Type</Label>
+                                            <Input type="text" className="form-control" placeholder="sizeType" value={this.state.size_type} name="sizeType" onChange={this.onChange} />
+                                        </FormGroup>
+                                        <FormGroup>
+                                            <Button type="submit" color="success">Submit</Button>
+                                        </FormGroup>
+                                    </Form>
                                 </div>
+
+
                             </Segment>
                         </Sidebar.Pusher>
                     </Sidebar.Pushable>
                 </div>
 
+
             </div>
+
         )
+
     }
+
 }
 
-const mapStateToProps = (state) => {
-    console.log(state)
+function mapStateToProps(state) {
+    console.log('shub', state);
     return {
-        parkingDetail: state.parkingDetail
+        size: state.SizeDetails
     }
+
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({ fetchParking }, dispatch)
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({ AddSize }, dispatch);
+
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ParkingMaster);
+
+export default connect(mapStateToProps, mapDispatchToProps)(SizeMaster)

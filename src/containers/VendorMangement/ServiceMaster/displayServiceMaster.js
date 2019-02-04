@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { getServiceType, getServiceDetail } from '../../../Actions/serviceMasterAction';
+import { getServiceType, getServiceDetail } from '../../../actionCreators/serviceMasterAction';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { authHeader } from '../../../helper/auth-header';
+import { authHeader } from '../../../helper/authHeader';
 import { bindActionCreators } from 'redux';
 import { Button, Modal, FormGroup, ModalBody, ModalHeader, ModalFooter, Input, Label } from 'reactstrap';
-import { URN } from '../../../constants/index';
+import { URN } from '../../../actions/index';
 import './serviceMaster.css';
 import { Link } from 'react-router-dom';
 import { Segment, Menu, Icon, Sidebar } from 'semantic-ui-react';

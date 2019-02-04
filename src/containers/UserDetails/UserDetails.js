@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
-import { getUsers, getRoles, addUser, deleteUsers } from '../../Actions';
+import { getUsers, getRoles, addUser, updateUser, deleteUser } from '../../actionCreators/superAdminMasterAction';
 import { bindActionCreators } from 'redux';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { URN } from '../../constants';
 import { Segment, Menu, Icon, Sidebar } from 'semantic-ui-react';
 import { Table, Button, Modal, FormGroup, ModalBody, ModalHeader, ModalFooter, Input, Label } from 'reactstrap';
-import { authHeader } from '../../helper/auth-header';
 class userDetails extends Component {
 
     state = {
@@ -48,14 +45,12 @@ class userDetails extends Component {
 
     updateUser = () => {
         let { userId, roleName, firstName, lastName, userName, email, contact } = this.state.editUserData;
-        axios.put(`${URN}/user/` + userId, {
-            userId, roleName, firstName, lastName, userName, email, contact
-        }, { headers: authHeader() }).then((response) => {
-            this.refreshData();
-        });
+        
+        this.props.updateUser(userId, roleName, firstName, lastName, userName, email, contact)
         this.setState({
             editUserModal: false, editUserData: { userId: '', roleName: '', firstName: '', lastName: '', userName: '', email: '', contact: '' }
         })
+        
 
     }
 
@@ -68,14 +63,15 @@ class userDetails extends Component {
     deleteUser(userId) {
         let { isActive } = this.state.editUserData
         console.log(userId)
-        const url = `${URN}/user/delete/`
-        axios.put(`${url}` + userId, { isActive }, { headers: authHeader() }).then((response) => {
-            this.refreshData()
-            this.setState({
-                editUserData: { isActive: false }
-            })
-            console.log(response)
-        })
+        // axios.put(`${url}` + userId, { isActive }, { headers: authHeader() }).then((response) => {
+        //     this.refreshData()
+        //     this.setState({
+        //         editUserData: { isActive: false }
+        //     })
+        //     console.log(response)
+        // })
+        this.props.deleteUser(userId, isActive)
+        .then(() => this.setState({isActive: false}))
     }
     // deleteUser(id){
     //     this.props.deleteUsers(id)
@@ -296,7 +292,8 @@ function mapDispatchToProps(dispatch) {
         getUsers,
         getRoles,
         addUser,
-        deleteUsers
+        updateUser,
+        deleteUser
     }, dispatch)
 }
 

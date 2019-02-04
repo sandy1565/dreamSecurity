@@ -1,17 +1,17 @@
 import { combineReducers } from 'redux';
-import userDetail from './registration_reducer';
-import loginReducer from './Login_reducer';
-import flats from './flatReducer';
-import flat from './flatMasterReducer';
-import TowerDetails from './tower_reducer';
-import EventDetails from './event_reducer';
-import serviceMasterReducer from './VendorMangement/serviceMasterReducer';
-import displayServiceMasterReducer from './VendorMangement/displayServiceMasterReducer';
-import vendorMasterReducer from './VendorMangement/vendorMasterReducer';
-import SizeDetails from './size_reducer';
-import societyReducer from './Society_reducer';
-import parkingDetail from './parking_reducer';
-import personDetails from './person_reducer';
+import userDetail from './userDetail/userDetail';
+import loginReducer from './loginReducer/loginReducer';
+import flats from './flatMasterDetailReducer/flatMasterDetailReducer';
+import flat from './flatMasterReducer/flatMasterReducer';
+import TowerDetails from './towerReducer/towerReducer';
+import EventDetails from './eventMasterReducer/eventMasterReducer';
+import serviceMasterReducer from './vendorMasterReducer/serviceMasterReducer';
+import displayServiceMasterReducer from './vendorMasterReducer/displayServiceMasterReducer';
+import vendorMasterReducer from './vendorMasterReducer/vendorMasterReducer';
+import SizeDetails from './sizeReducer/sizeReducer';
+import societyReducer from './societyReducer/societyReducer';
+import parkingDetail from './parkingReducer/parkingReducer';
+import personDetails from './personReducer/personReducer';
 
 const rootReducer = combineReducers({
     loginReducer,

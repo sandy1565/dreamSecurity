@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './SuperDashboard.css';
-import Logo from '../../Assets/2.jpg';
+import './superDashboard.css';
+import Logo from '../../assets/2.jpg';
 import { Segment, Menu, Icon, Sidebar } from 'semantic-ui-react';
 
 

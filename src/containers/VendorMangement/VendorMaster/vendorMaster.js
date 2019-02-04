@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getServiceType } from '../../../Actions/serviceMasterAction';
-import { addVendorMaster } from '../../../Actions/vendorMasterAction';
+import { getServiceType } from '../../../actionCreators/serviceMasterAction';
+import { addVendorMaster } from '../../../actionCreators/vendorMasterAction';
 import { Link } from 'react-router-dom';
-import Logo from '../../../Assets/2.jpg';
+import Logo from '../../../assets/2.jpg';
 import { Segment, Menu, Icon, Sidebar } from 'semantic-ui-react';
-// import './vendorMaster.css';
 
 
 class vendorMaster extends Component {
@@ -18,9 +17,7 @@ class vendorMaster extends Component {
             serviceId: '',
             description: '',
             menuVisible: false
-
-
-        }
+         }
         this.handleChange = this.handleChange.bind(this);
 
     }

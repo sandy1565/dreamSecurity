@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { addServiceType, getServiceDetail } from '../../../Actions/serviceMasterAction';
+import { addServiceType, getServiceDetail } from '../../../actionCreators/serviceMasterAction';
 import './serviceMaster.css';
 import { Link } from 'react-router-dom';
-import Logo from '../../../Assets/2.jpg';
+import Logo from '../../../assets/2.jpg';
 import { Segment, Menu, Icon, Sidebar } from 'semantic-ui-react';
 
 

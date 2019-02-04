@@ -1,46 +1,56 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import AddTower from '../../actionCreators/towerMasterAction';
 import { bindActionCreators } from 'redux';
-import { fetchParking} from '../../actionCreators/parkingAction';
-import { Table, Button } from 'reactstrap';
-import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import Logo from '../../assets/2.jpg';
+import { FormGroup, Form, Label, Input, Button } from 'reactstrap';
 import { Segment, Menu, Icon, Sidebar } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
+import './towerMaster.css'
 
-class ParkingMaster extends Component {
-    state = {
-        menuVisible: false
-    }
-    componentDidMount() {
-        this.props.fetchParking()
+
+class TowerMaster extends Component {
+
+    constructor(props) {
+        super(props);
+
+
+        this.state = {
+
+            towerName: "",
+            menuVisible: false
+        }
+
+        this.onChange = this.onChange.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
     }
 
-    delete_Parking(id) {
-        this.props.deleteParking(id)
-            .then(() => this.props.fetchParking())
-    }
 
-    renderParking({ parking }) {
-        console.log(parking);
-        if (parking) {
-            return parking.slot.map((item) => {
-                console.log(item)
-                return (
-                    <tr key={item.parking_master.parkingName}>
-                        <td>
-                            {item.parking_master.parkingName}
-                        </td>
-                        <td>
-                            {item.count}
-                        </td>
-                        <td>
-                            <Button color='success' className="mr-2">Edit</Button>
-                            <Button color='danger' onClick={this.delete_Parking.bind(this, item.id)}>Delete</Button>
-                        </td>
-                    </tr>
-                );
-            })
+    onChange(e) {
+        this.setState({ [e.target.name]: e.target.value });
+    }
+    OnKeyPresshandler(event) {
+        const pattern = /[a-zA-Z]/;
+        let inputChar = String.fromCharCode(event.charCode);
+        if (!pattern.test(inputChar)) {
+            event.preventDefault();
         }
     }
+    onSubmit(event) {
+        event.preventDefault();
+        console.log(this.state)
+
+        this.props.AddTower(this.state)
+        return this.setState({
+            state: {
+
+                towerName: ""
+            }
+        }),
+            this.props.history.push('/superDashboard/display-tower');
+    }
+
+
     render() {
         return (
             <div>
@@ -71,10 +81,10 @@ class ParkingMaster extends Component {
                         </form>
                     </div>
                 </nav>
-                <div style={{ margin: '48px auto' }}>
+                <div style={{ marginTop: '48px' }}>
                     <Sidebar.Pushable as={Segment} attached="bottom">
                         <Sidebar width='thin' as={Menu} animation="uncover" visible={this.state.menuVisible} icon="labeled" vertical inverted>
-                            <Menu.Item><Icon name="user" /><Link to="/superDashboard/registration">Super Admin Register</Link></Menu.Item>
+                            <Menu.Item><Icon name="user" /><Link to="/superDashboard/registration">Society Admin Register</Link></Menu.Item>
                             <Menu.Item><Icon name="user" />Admin Register</Menu.Item>
                             <Menu.Item><Icon name="user" />Society Member Owner Register</Menu.Item>
                             <Menu.Item><Icon name="user" />Society Member Tenant Register</Menu.Item>
@@ -86,49 +96,44 @@ class ParkingMaster extends Component {
                             <Menu.Item><Icon name="user" /><Link to="/superDashboard/sizemaster">Size Master</Link></Menu.Item>
                         </Sidebar>
                         <Sidebar.Pusher dimmed={this.state.menuVisible}>
-                            <Segment basic >
+                            <Segment basic style={{ backgroundImage: `url(${Logo})`,padding:'55px 0', backgroundSize: 'cover', backgroundRepeat: 'no-repeat', height: '600px' }}>
                                 {/* <Header as="h3">Application Content</Header> */}
                                 {/* <Image src='//unsplash.it/800/480' /> */}
-                                <h1 style={{ color: 'black' }}>Add Parking</h1>
-                                <div>
-                                    <div>
-                                        <Link to='/superDashboard/add_parking/new'>Add Parking</Link>
-                                    </div>
-                                    <h3>Parking details</h3>
-                                    <div className="container">
-                                        <Table>
-                                            <thead>
-                                                <tr>
-                                                    <th>Basement</th>
-                                                    <th>No. of Parking</th>
-                                                    <th>Actions</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {this.renderParking(this.props.parkingDetail)}
-                                            </tbody>
-                                        </Table>
-                                    </div>
+                                <div className="form">
+                                    <Form onSubmit={this.onSubmit}>
+                                        <FormGroup>
+                                            <Label>Tower Name</Label>
+                                            <Input type="text" className="form-control" placeholder="tower Name" name="towerName" value={this.state.name} onKeyPress={this.OnKeyPresshandler} onChange={this.onChange} required />
+                                        </FormGroup>
+                                        <FormGroup>
+                                            <Button color="success" className="mr-2">Submit</Button>
+                                            <Button color="primary" to="/superDashboard/display-tower">Tower details</Button>
+                                        </FormGroup>
+                                    </Form>
                                 </div>
                             </Segment>
                         </Sidebar.Pusher>
                     </Sidebar.Pushable>
                 </div>
 
+
+
             </div>
-        )
+        );
+
     }
+
 }
 
-const mapStateToProps = (state) => {
-    console.log(state)
+function mapStateToProps(state) {
+    console.log(state);
     return {
-        parkingDetail: state.parkingDetail
+        Tower: state.TowerDetails
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({ fetchParking }, dispatch)
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(ParkingMaster);
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({ AddTower }, dispatch);
+}
+export default connect(mapStateToProps, mapDispatchToProps)(TowerMaster)

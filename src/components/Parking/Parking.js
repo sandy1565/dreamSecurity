@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { FormGroup, Form, Label, Input, Button } from 'reactstrap';
-import { fetchBasement, createParking } from '../../Actions';
+import { fetchBasement, createParking } from '../../actionCreators/parkingAction';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import Logo from '../../Assets/2.jpg';
+import Logo from '../../assets/2.jpg';
 import { Segment, Menu, Icon, Sidebar } from 'semantic-ui-react';
-import './Parking.css';
+import './parking.css';
 
 class Parking extends Component {
     componentDidMount() {
@@ -60,21 +60,19 @@ class Parking extends Component {
         e.preventDefault();
         let errors = {};
         if(!this.state.parkingId){
-            errors.parkingId = `Parking details can't be empty. Please select any.`
-        }
-        else {
-            errors.parkingId=``;
+            errors.parkingId = `Parking details can't be empty. Please select any.`;
+            console.log(this.state.errors);
         }
         if(this.state.numberOfSlots === ''){
-            errors.numberOfSlots = `Please select number of slots.`
+            errors.numberOfSlots = `Please select number of slots.`;
+            console.log(this.state.errors);
         }
-        else errors.numberOfSlots = ``;
         this.setState({errors});
         const isValid = Object.keys(errors).length === 0;
 
         if(isValid){
             console.log(this.state);
-            this.props.createParking({ ...this.state })
+            this.props.createParking({...this.state })
             .then(() => this.props.history.push('/superDashboard/parking_master'));
         }
         
@@ -147,6 +145,7 @@ class Parking extends Component {
                                                 onChange={this.onChange}
                                                 onKeyPress={this.numberOfSlots}
                                                 maxLength='2'
+                                                minLength='1'
                                             />
                                             <span>{this.state.errors.numberOfSlots}</span>
                                         </FormGroup>

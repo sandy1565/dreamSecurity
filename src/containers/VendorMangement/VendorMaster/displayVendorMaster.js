@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
-import { getVendorMaster } from '../../../Actions/vendorMasterAction';
-import { getServiceType } from '../../../Actions/serviceMasterAction';
-import { authHeader } from '../../../helper/auth-header';
+import { getVendorMaster } from '../../../actionCreators/vendorMasterAction';
+import { getServiceType } from '../../../actionCreators/serviceMasterAction';
+import { authHeader } from '../../../helper/authHeader';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Button, Modal, FormGroup, ModalBody, ModalHeader, ModalFooter, Input, Label } from 'reactstrap';
 import axios from 'axios';
-import { URN } from '../../../constants/index';
+import { URN } from '../../../actions/index';
 import { Link } from 'react-router-dom';
 import './vendorMaster.css';
-import Logo from '../../../Assets/2.jpg';
 import { Segment, Menu, Icon, Sidebar } from 'semantic-ui-react';
 
 class displayVendorMaster extends Component {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import { bindActionCreators } from 'redux';
-import {getCountry} from '../../Actions/society_action'
+import {getCountry} from '../../actionCreators/societyMasterAction'
 
 class SocietyMangement extends Component {
 

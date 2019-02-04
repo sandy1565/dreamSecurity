@@ -1,11 +1,11 @@
 import React , { Component } from 'react';
 import {Link} from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './Login.css';
-import Logo from '../../Assets/2.jpg';
+import './login.css';
+import Logo from '../../assets/2.jpg';
 import {Segment,Menu,Icon,Sidebar } from 'semantic-ui-react';
 import {connect} from 'react-redux';
-import {login} from '../../Actions/login_action';
+import {login} from '../../actionCreators/loginAction';
 import { bindActionCreators } from 'redux';
 import { Form,Modal,ModalHeader,ModalBody,ModalFooter, FormGroup, Input, Button, Label } from 'reactstrap';
 
