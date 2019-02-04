@@ -3,8 +3,8 @@ import axios from 'axios';
 import {URN,ADD_SIZE,GET_SIZE} from '../actions';
 export   function AddSize(values){
  
-    const request =axios.post(`${URN}/size`,values,{headers:authHeader()},{method:'POST'})
-     .then()
+    const request =axios.post(`${URN}/size`,values,{headers:authHeader()})
+     .then(displaySize())
       return{  
           type:ADD_SIZE,
           payload: request

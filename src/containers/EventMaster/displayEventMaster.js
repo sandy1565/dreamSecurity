@@ -76,7 +76,7 @@ class DisplayEventMaster extends Component {
             }
         deleteEvent(eventId) {
                 let { isActive } = this.state.editEventData;
-                axios.delete(`${URN}/event/delete/` + eventId, { isActive }, { headers: authHeader() }).then((response) => {
+                axios.put(`${URN}/event/delete/` + eventId, { isActive }, { headers: authHeader() }).then((response) => {
                         this.refreshData()
                         this.setState({ editEventData: { isActive: false } })
 

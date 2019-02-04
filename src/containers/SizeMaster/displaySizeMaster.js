@@ -8,6 +8,7 @@ import { authHeader } from '../../helper/authHeader';
 import { Button, Modal, FormGroup, ModalBody, ModalHeader, ModalFooter, Input, Label } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { Segment, Menu, Icon, Sidebar } from 'semantic-ui-react';
+import {URN} from '../../actions/index'
 
 class DisplaySizeMaster extends Component {
   state = {
@@ -46,10 +47,11 @@ class DisplaySizeMaster extends Component {
     })
   }
   updateSize() {
-    let { id, sizeId, sizeType } = this.state.editSizeData;
-    console.log('dfdsfd', id, sizeId, sizeType);
+    let { sizeId, sizeType } = this.state.editSizeData;
+    console.log('dfdsfd', sizeId, sizeType);
+    console.log(sizeId)
 
-    axios.put('http://192.168.1.113:8081/api/size/' + this.state.editSizeData.sizeId, {
+    axios.put(`${URN}/size/` + this.state.editSizeData.sizeId, {
       sizeType
     }, { headers: authHeader() }).then((response) => {
 
@@ -75,7 +77,7 @@ class DisplaySizeMaster extends Component {
   deleteSize(sizeId) {
     console.log('sisxcdasd', sizeId);
 
-    axios.delete('http://192.168.1.113:8081/api/size/' + sizeId, { headers: authHeader() }).then((response) => {
+    axios.put(`${URN}/size/` + sizeId, { headers: authHeader() }).then((response) => {
       console.log(response.data);
       this.setState(this.refreshData())
     })

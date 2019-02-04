@@ -8,6 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { connect } from 'react-redux';
 import { Table, Button, Modal, FormGroup, ModalBody, ModalHeader, ModalFooter, Label } from 'reactstrap';
 import { Segment, Menu, Icon, Sidebar } from 'semantic-ui-react';
+import {URN} from '../../actions/index'
 
 class flatMasterDetails extends Component {
     state = {
@@ -58,7 +59,7 @@ class flatMasterDetails extends Component {
     updateBook = () => {
         let { flatId, societyId, flatType, flatSuperArea, sizeId, coverArea } = this.state.editUserData;
 
-        axios.put('http://192.168.1.113:8081/api/flat/' + flatId, {
+        axios.put(`${URN}/flat/` + flatId, {
             societyId, flatType, flatSuperArea,
             sizeId, coverArea
         }, { headers: authHeader() }).then((response) => {
@@ -121,7 +122,7 @@ class flatMasterDetails extends Component {
 
     deleteUser(flatId) {
         let { isActive } = this.state.editUserData
-        axios.put('http://192.168.1.113:8081/api/flat/delete/' + flatId, { isActive }, { headers: authHeader() }).then((response) => {
+        axios.put(`${URN}/flat/delete/` + flatId, { isActive }, { headers: authHeader() }).then((response) => {
             this.refreshData()
             this.setState({ editUserData: { isActive: false } })
 

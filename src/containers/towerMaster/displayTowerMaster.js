@@ -7,6 +7,7 @@ import { Segment, Menu, Icon, Sidebar } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { authHeader } from '../../helper/authHeader';
 import { Button, Modal, FormGroup, ModalBody, ModalHeader, ModalFooter, Input, Label } from 'reactstrap';
+import {URN} from  '../../actions/index'
 
 class DisplayTowerMaster extends Component {
   constructor(props) {
@@ -50,7 +51,7 @@ class DisplayTowerMaster extends Component {
 
 
     axios.delete(
-      'http://192.168.1.113:8081/api/tower/' + towerId, { headers: authHeader() }).then((response) => {
+      `${URN}/tower/` + towerId, { headers: authHeader() }).then((response) => {
 
         this.setState(this.refreshdata());
 
@@ -68,7 +69,7 @@ class DisplayTowerMaster extends Component {
   updateTower() {
     let { id, towerId, towerName } = this.state.editTowerData;
     console.log('----------------', towerId, towerName);
-    axios.put('http://192.168.1.113:8081/api/tower/' + this.state.editTowerData.towerId, {
+    axios.put(`${URN}/tower/` + this.state.editTowerData.towerId, {
       towerName
     }, { headers: authHeader() }).then((response) => {
       this.refreshdata();
