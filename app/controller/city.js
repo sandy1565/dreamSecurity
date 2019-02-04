@@ -44,7 +44,7 @@ exports.update = (req,res) => {
     if(!id){
         res.json("Please enter id");
     }
-    const updates = req.body.updates;
+    const updates = req.body;
     City.find({
         where: { cityId: id }
       })
