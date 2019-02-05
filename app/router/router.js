@@ -66,7 +66,7 @@ module.exports = function(app) {
 
 	app.put('/api/country/:id',[authJwt.verifyToken],  countryController.update);
 
-	app.put('/api/country/:id',[authJwt.verifyToken], countryController.delete);
+	app.put('/api/country/delete/:id',[authJwt.verifyToken], countryController.delete);
 
 	app.post('/api/state', [authJwt.verifyToken],stateController.create);
 
