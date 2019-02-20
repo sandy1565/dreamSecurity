@@ -1,23 +1,23 @@
 const db = require('../config/db.config.js');
 const config = require('../config/config.js');
-const httpStatus = require('http-status')
+const httpStatus = require('http-status');
 
-const Event = db.event;
-const User = db.user;
-const Role = db.role;
-const Op = db.Sequelize.Op;
+const MaintenanceType = db.maintenanceType;
+const Maintenance = db.maintenance;
+const Size = db.size;
 
 exports.create = async (req, res, next) => {
     try {
-        console.log("creating event");
+        console.log("creating maintenance");
         let body = req.body;
         body.userId = req.userId;
-        console.log("body===>", body)
-        const event = await Event.create(body);
-        return res.status(httpStatus.CREATED).json({
-            message: "Event successfully created",
-            event
-        });
+        const maintenanceType = await MaintenanceType.create(body);
+        if (maintenanceType) {
+            return res.status(httpStatus.CREATED).json({
+                message: "Maintenance Type successfully created",
+                maintenanceType
+            });
+        }
     } catch (error) {
         console.log("error==>", error);
         res.status(httpStatus.INTERNAL_SERVER_ERROR).json(error);
@@ -26,19 +26,18 @@ exports.create = async (req, res, next) => {
 
 exports.get = async (req, res, next) => {
     try {
-        const event = await Event.findAll({
+        const maintenanceType = await MaintenanceType.findAll({
             where: { isActive: true },
             order: [['createdAt', 'DESC']],
-            include: [{
-                model: User,
-                as: 'organiser',
-                attributes: ['userId', 'userName'],
-            }]
+            include: [
+                { model: Size },
+                { model: Maintenance }
+            ]
         });
-        if (event) {
+        if (maintenanceType) {
             return res.status(httpStatus.CREATED).json({
-                message: "Event Content Page",
-                event: event
+                message: "Maintenance Type Content Page",
+                maintenanceType: maintenanceType
             });
         }
     } catch (error) {
@@ -59,13 +58,13 @@ exports.update = async (req, res, next) => {
         if (!update) {
             return res.status(httpStatus.UNPROCESSABLE_ENTITY).json({ message: "Please try again " });
         }
-        const updatedEvent = await Event.find({ where: { eventId: id } }).then(event => {
-            return event.updateAttributes(update)
+        const updatedMaintenanceType = await MaintenanceType.find({ where: { maintenanceTypeId: id } }).then(maintenanceType => {
+            return maintenanceType.updateAttributes(update)
         })
-        if (updatedEvent) {
+        if (updatedMaintenanceType) {
             return res.status(httpStatus.OK).json({
-                message: "Event Updated Page",
-                event: updatedEvent
+                message: "Maintenance Type Updated Page",
+                updatedMaintenanceType
             });
         }
     } catch (error) {
@@ -84,38 +83,16 @@ exports.delete = async (req, res, next) => {
         if (!update) {
             return res.status(httpStatus.UNPROCESSABLE_ENTITY).json({ message: "Please try again " });
         }
-        const updatedEvent = await Event.find({ where: { eventId: id } }).then(event => {
-            return event.updateAttributes(update)
+        const updatedMaintenanceType = await MaintenanceType.find({ where: { maintenanceTypeId: id } }).then(maintenanceType => {
+            return maintenanceType.updateAttributes(update)
         })
-        if (updatedEvent) {
+        if (updatedMaintenanceType) {
             return res.status(httpStatus.OK).json({
-                message: "Event deleted successfully",
-                event: updatedEvent
+                message: "Maintenance Type deleted successfully",
+                updatedMaintenanceType
             });
         }
     } catch (error) {
-        res.status(httpStatus.INTERNAL_SERVER_ERROR).json(error);
-    }
-}
-
-exports.getEventOrganiser = async (req, res, next) => {
-    try {
-        const user = await User.findAll({
-            attributes: ['userId', 'userName'], include: [{
-                model: Role,
-                where: { roleName: 'ADMIN' },
-                attributes: ['id', 'roleName'],
-            },
-            ]
-        });
-        // console.log("user==>",user)
-        return res.status(httpStatus.OK).json({
-            message: "Event Organiser Detail",
-            event: user
-        });
-
-    } catch (error) {
-        console.log("error===>", error)
         res.status(httpStatus.INTERNAL_SERVER_ERROR).json(error);
     }
 }
@@ -128,10 +105,10 @@ exports.deleteSelected = async (req, res, next) => {
         if (!deleteSelected) {
             return res.status(httpStatus.UNPROCESSABLE_ENTITY).json({ message: "No id Found" });
         }
-        const updatedEvent = await Event.update(update, { where: { eventId: { [Op.in]: deleteSelected } } })
-        if (updatedEvent) {
+        const updatedMaintenanceType = await MaintenanceType.update(update, { where: { maintenanceTypeId: { [Op.in]: deleteSelected } } })
+        if (updatedMaintenanceType) {
             return res.status(httpStatus.OK).json({
-                message: "Events deleted successfully",
+                message: "Maintenance Types deleted successfully",
             });
         }
     } catch (error) {

@@ -1,74 +1,57 @@
 const db = require('../config/db.config.js');
-const httpStatus = require('http-status')
+const config = require('../config/config.js');
+const httpStatus = require('http-status');
 
-const FlatDetail = db.flatDetail;
-const Flat = db.flat;
-const Tower = db.tower;
+const Maintenance = db.maintenance;
 
 exports.create = async (req, res, next) => {
     try {
+        console.log("creating maintenance");
         let body = req.body;
         body.userId = req.userId;
-        const flatNo = await FlatDetail.findOne({
+
+        const maintenanceExists = await Maintenance.findOne({
             where: {
-                [Op.and]: [
-                    { flatNo: body.flatNo },
-                    { isActive: true }
-                ]
+                category: req.body.category
             }
         })
-        if (flatNo) {
-            return res.status(httpStatus.UNPROCESSABLE_ENTITY).json({
-                message: "Flat number already exists",
+        if (maintenanceExists) {
+            return res.status(httpStatus.UNPROCESSABLE_ENTITY).json({ message: "Maintenance Name already Exists" })
+        }
+        const maintenance = await Maintenance.create(body);
+        if (maintenance) {
+            return res.status(httpStatus.CREATED).json({
+                message: "Maintenance successfully created",
+                maintenance
             });
         }
-        const towerId = await FlatDetail.findOne({
-            where: {
-                [Op.and]: [
-                    { towerId: body.towerId },
-                    { isActive: true }
-                ]
-            }
-        })
-        if (towerId) {
-            return res.status(httpStatus.UNPROCESSABLE_ENTITY).json({
-                message: "Tower already exists",
-            });
-        }
-        const flatDetail = await FlatDetail.create(body);
-        return res.status(httpStatus.CREATED).json({
-            message: "FlatDetail successfully created",
-            flatDetail
-        });
     } catch (error) {
+        console.log("error==>", error);
         res.status(httpStatus.INTERNAL_SERVER_ERROR).json(error);
     }
 }
 
 exports.get = async (req, res, next) => {
     try {
-        const flatDetail = await FlatDetail.findAll({
-            where: { isActive: true }, order: [['createdAt', 'DESC']], include: [{
-                model: Flat,
-                attributes: ['flatId', 'flatType'],
-            }, {
-                model: Tower,
-                attributes: ['towerId', 'towerName'],
-            }]
+        const maintenance = await Maintenance.findAll({
+            where: { isActive: true },
+            order: [['createdAt', 'DESC']],
         });
-        if (flatDetail) {
+        if (maintenance) {
             return res.status(httpStatus.CREATED).json({
-                message: "FlatDetail Content Page",
-                flatDetail: flatDetail
+                message: "Maintenance Content Page",
+                maintenance: maintenance
             });
         }
     } catch (error) {
+        console.log("error==>", error)
         res.status(httpStatus.INTERNAL_SERVER_ERROR).json(error);
     }
 }
 
 exports.update = async (req, res, next) => {
     try {
+        console.log("update maintenance")
         const id = req.params.id;
         console.log("id==>", id)
         if (!id) {
@@ -79,13 +62,13 @@ exports.update = async (req, res, next) => {
         if (!update) {
             return res.status(httpStatus.UNPROCESSABLE_ENTITY).json({ message: "Please try again " });
         }
-        const updatedFlatDetail = await FlatDetail.find({ where: { flatDetailId: id } }).then(flatDetail => {
-            return flatDetail.updateAttributes(update)
+        const updatedMaintenance = await Maintenance.find({ where: { maintenanceId: id } }).then(maintenance => {
+            return maintenance.updateAttributes(update)
         })
-        if (updatedFlatDetail) {
+        if (updatedMaintenance) {
             return res.status(httpStatus.OK).json({
-                message: "FlatDetail Updated Page",
-                flatDetail: updatedFlatDetail
+                message: "Maintenance Updated Page",
+                updatedMaintenance
             });
         }
     } catch (error) {
@@ -104,13 +87,13 @@ exports.delete = async (req, res, next) => {
         if (!update) {
             return res.status(httpStatus.UNPROCESSABLE_ENTITY).json({ message: "Please try again " });
         }
-        const updatedFlatDetail = await FlatDetail.find({ where: { flatDetailId: id } }).then(flatDetail => {
-            return flatDetail.updateAttributes(update)
+        const updatedMaintenance = await Maintenance.find({ where: { maintenanceId: id } }).then(maintenance => {
+            return maintenance.updateAttributes(update)
         })
-        if (updatedFlatDetail) {
+        if (updatedMaintenance) {
             return res.status(httpStatus.OK).json({
-                message: "FlatDetail deleted successfully",
-                flatDetail: updatedFlatDetail
+                message: "Maintenance deleted successfully",
+                updatedMaintenance
             });
         }
     } catch (error) {
@@ -126,10 +109,10 @@ exports.deleteSelected = async (req, res, next) => {
         if (!deleteSelected) {
             return res.status(httpStatus.UNPROCESSABLE_ENTITY).json({ message: "No id Found" });
         }
-        const updatedFlatDetail = await FlatDetail.update(update, { where: { flatDetailId: { [Op.in]: deleteSelected } } })
-        if (updatedFlatDetail) {
+        const updatedMaintenance = await Maintenance.update(update, { where: { maintenanceId: { [Op.in]: deleteSelected } } })
+        if (updatedMaintenance) {
             return res.status(httpStatus.OK).json({
-                message: "Flat Details deleted successfully",
+                message: "Maintenance deleted successfully",
             });
         }
     } catch (error) {

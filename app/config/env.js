@@ -1,14 +1,15 @@
 const env = {
-  database: 'dream_society',
-  username: 'client_user',
-  password: 'client123',
-  host: 'localhost',
+  database: 'greattug_dreamsecurity',
+  username: 'greattug_jitendr',
+  password: 'honda1234##',
+  host: 'greatwits.com.md-in-73.bigrockservers.com',
   dialect: 'mysql',
   pool: {
-	  max: 5,
+	  max: 10,
 	  min: 0,
 	  idle: 10000
   }
 };
+ 
  
 module.exports = env;
