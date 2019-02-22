@@ -15,7 +15,9 @@ const nexmo = new Nexmo(
 
 const Vendor = db.vendor;
 const Service = db.service;
+const Rate =db.rate;
 const VendorService = db.vendorService;
+const Op = db.Sequelize.Op;
 
 exports.createVendor = async (req, res, next) => {
     try {
@@ -35,7 +37,9 @@ exports.createVendor = async (req, res, next) => {
 exports.create = async (req, res, next) => {
     try {
         let body = req.body;
-        const userName = req.body.vendorName += Math.floor((Math.random() * 100) + 1);
+        console.log("body===>",body);
+        let customVendorName = body.vendorName;
+        const userName = customVendorName += Math.floor((Math.random() * 100) + 1);
         const password = passwordGenerator.generate({
             length: 10,
             numbers: true
@@ -49,13 +53,12 @@ exports.create = async (req, res, next) => {
             picture: body.picture,
             contact: body.contact,
             userId: req.userId,
-            document: body.document
+            // document: body.document
         });
         const vendorId = vendor.vendorId;
         if (body.rate1) {
             const vendorService = await VendorService.create({
                 vendorId: vendorId,
-                serviceDetailId: body.serviceDetailId1,
                 rateId: body.rateId1,
                 rate: body.rate1,
                 userId: req.userId,
@@ -65,7 +68,6 @@ exports.create = async (req, res, next) => {
         if (body.rate2) {
             const vendorService = await VendorService.create({
                 vendorId: vendorId,
-                serviceDetailId: body.serviceDetailId2,
                 rateId: body.rateId2,
                 rate: body.rate2,
                 userId: req.userId,
@@ -76,25 +78,25 @@ exports.create = async (req, res, next) => {
         if (body.rate3) {
             const vendorService = await VendorService.create({
                 vendorId: vendorId,
-                serviceDetailId: body.serviceDetailId3,
                 rateId: body.rateId3,
                 rate: body.rate3,
                 userId: req.userId,
                 serviceId: body.serviceId3
             })
         }
+        console.log("req.files===>",req.files)
         if (req.files) {
-            for (let i = 0; i < req.files.profilePicture.length; i++) {
-                profileImage = req.files.profilePicture[i].filename;
-            }
+            // for (let i = 0; i < req.files.profilePicture.length; i++) {
+                profileImage = req.files.profilePicture[0].path;
+            // }
             const updateImage = {
                 picture: profileImage
             };
             const imageUpdate = await Vendor.find({ where: { vendorId: vendorId } }).then(vendor => {
                 return vendor.updateAttributes(updateImage)
             })
-            documentOne = req.files.document[0].filename;
-            documentTwo = req.files.document[1].filename;
+            documentOne = req.files.documentOne[0].path;
+            documentTwo = req.files.documentTwo[0].path;
             const updateDocument = {
                 documentOne: documentOne,
                 documentTwo: documentTwo
@@ -128,7 +130,9 @@ exports.get = async (req, res, next) => {
             where: { isActive: true },
             order: [['createdAt', 'DESC']],
             include: [
-            { model: Vendor }]
+            { model: Vendor },
+            {model:Rate},
+            {model:Service}]
         });
         if (vendor) {
             return res.status(httpStatus.CREATED).json({
@@ -144,13 +148,17 @@ exports.get = async (req, res, next) => {
 
 exports.update = async (req, res, next) => {
     try {
-        console.log("updating vendor")
+        console.log("updating vendor");
+        console.log(":::::req.body==>",req.body)
         const id = req.params.id;
+        console.log(":::::id",id)
         if (!id) {
             return res.status(httpStatus.UNPROCESSABLE_ENTITY).json({ message: "Id is missing" });
         }
         const update = req.body;
-
+        // const empty = isEmpty(update)
+        // console.log(empty)
+        
         if (!update) {
             return res.status(httpStatus.UNPROCESSABLE_ENTITY).json({ message: "Please try again " });
         }
@@ -164,6 +172,7 @@ exports.update = async (req, res, next) => {
             });
         }
     } catch (error) {
+        console.log(error)
         res.status(httpStatus.INTERNAL_SERVER_ERROR).json(error);
     }
 }
@@ -192,18 +201,12 @@ exports.delete = async (req, res, next) => {
     }
 }
 
-exports.uploadPicture = async (req, res, next) => {
-    try {
-        console.log("file info ", req.file);
-    } catch (error) {
-        res.status(httpStatus.INTERNAL_SERVER_ERROR).json(error);
-    }
-}
 
 exports.deleteSelected = async (req, res, next) => {
 	try {
 		const deleteSelected = req.body.ids;
-		console.log("delete selected==>", deleteSelected);
+        console.log("delete selected==>", deleteSelected);
+         
 		const update = { isActive: false };
 		if (!deleteSelected) {
 			return res.status(httpStatus.UNPROCESSABLE_ENTITY).json({ message: "No id Found" });
